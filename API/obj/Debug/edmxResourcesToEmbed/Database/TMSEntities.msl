@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TiffinManagementServiceModelStoreContainer" CdmEntityContainer="TiffinManagementServiceEntities">
+    <EntitySetMapping Name="UserMasters">
+      <EntityTypeMapping TypeName="TiffinManagementServiceModel.UserMaster">
+        <MappingFragment StoreEntitySet="UserMaster">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Contact" ColumnName="Contact" />
+          <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+          <ScalarProperty Name="DefaultTiffinTypeId" ColumnName="DefaultTiffinTypeId" />
+          <ScalarProperty Name="IsRegularBM" ColumnName="IsRegularBM" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Orders">
+      <EntityTypeMapping TypeName="TiffinManagementServiceModel.Order">
+        <MappingFragment StoreEntitySet="Order">
+          <ScalarProperty Name="Total" ColumnName="Total" />
+          <ScalarProperty Name="ExtraItemPrice" ColumnName="ExtraItemPrice" />
+          <ScalarProperty Name="ExtraItem" ColumnName="ExtraItem" />
+          <ScalarProperty Name="ButterMilkPrice" ColumnName="ButterMilkPrice" />
+          <ScalarProperty Name="TiffinPrice" ColumnName="TiffinPrice" />
+          <ScalarProperty Name="IsButterMilk" ColumnName="IsButterMilk" />
+          <ScalarProperty Name="TiffinTypeId" ColumnName="TiffinTypeId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+          <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TiffinTypeMasters">
+      <EntityTypeMapping TypeName="TiffinManagementServiceModel.TiffinTypeMaster">
+        <MappingFragment StoreEntitySet="TiffinTypeMaster">
+          <ScalarProperty Name="TiffinPrice" ColumnName="TiffinPrice" />
+          <ScalarProperty Name="TiffinTypeName" ColumnName="TiffinTypeName" />
+          <ScalarProperty Name="TiffinTypeId" ColumnName="TiffinTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,9 @@
+C:\Data\Demo\MVC\TiffinManagementService\Common\bin\Debug\Common.dll
+C:\Data\Demo\MVC\TiffinManagementService\Common\bin\Debug\Common.pdb
+C:\Data\Demo\MVC\TiffinManagementService\Common\obj\Debug\Common.csprojResolveAssemblyReference.cache
+C:\Data\Demo\MVC\TiffinManagementService\Common\obj\Debug\Common.dll
+C:\Data\Demo\MVC\TiffinManagementService\Common\obj\Debug\Common.pdb
+C:\Data\Demo\MVC\TiffinManagementService\Common\bin\Debug\Newtonsoft.Json.dll
+C:\Data\Demo\MVC\TiffinManagementService\Common\bin\Debug\System.Net.Http.Formatting.dll
+C:\Data\Demo\MVC\TiffinManagementService\Common\bin\Debug\Newtonsoft.Json.xml
+C:\Data\Demo\MVC\TiffinManagementService\Common\bin\Debug\System.Net.Http.Formatting.xml

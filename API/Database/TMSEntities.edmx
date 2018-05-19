@@ -1,0 +1,236 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TiffinManagementServiceModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderDate" Type="datetime" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="TiffinTypeId" Type="int" Nullable="false" />
+          <Property Name="IsButterMilk" Type="bit" Nullable="false" />
+          <Property Name="TiffinPrice" Type="int" Nullable="false" />
+          <Property Name="ButterMilkPrice" Type="int" Nullable="false" />
+          <Property Name="ExtraItem" Type="varchar" MaxLength="50" />
+          <Property Name="ExtraItemPrice" Type="int" />
+          <Property Name="Total" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TiffinTypeMaster">
+          <Key>
+            <PropertyRef Name="TiffinTypeId" />
+          </Key>
+          <Property Name="TiffinTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TiffinTypeName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TiffinPrice" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserMaster">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Contact" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsAdmin" Type="bit" Nullable="false" />
+          <Property Name="DefaultTiffinTypeId" Type="int" Nullable="false" />
+          <Property Name="IsRegularBM" Type="bit" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Order_TiffinTypeMaster">
+          <End Role="TiffinTypeMaster" Type="Self.TiffinTypeMaster" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TiffinTypeMaster">
+              <PropertyRef Name="TiffinTypeId" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="TiffinTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_UserMaster">
+          <End Role="UserMaster" Type="Self.UserMaster" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserMaster">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TiffinManagementServiceModelStoreContainer">
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TiffinTypeMaster" EntityType="Self.TiffinTypeMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserMaster" EntityType="Self.UserMaster" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Order_TiffinTypeMaster" Association="Self.FK_Order_TiffinTypeMaster">
+            <End Role="TiffinTypeMaster" EntitySet="TiffinTypeMaster" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_UserMaster" Association="Self.FK_Order_UserMaster">
+            <End Role="UserMaster" EntitySet="UserMaster" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TiffinManagementServiceModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="UserMaster">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Contact" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
+          <Property Name="DefaultTiffinTypeId" Type="Int32" Nullable="false" />
+          <Property Name="IsRegularBM" Type="Boolean" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="TiffinManagementServiceModel.FK_Order_UserMaster" FromRole="UserMaster" ToRole="Order" />
+        </EntityType>
+        <EntityContainer Name="TiffinManagementServiceEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="UserMasters" EntityType="Self.UserMaster" />
+          <EntitySet Name="Orders" EntityType="TiffinManagementServiceModel.Order" />
+          <EntitySet Name="TiffinTypeMasters" EntityType="TiffinManagementServiceModel.TiffinTypeMaster" />
+          <AssociationSet Name="FK_Order_TiffinTypeMaster" Association="TiffinManagementServiceModel.FK_Order_TiffinTypeMaster">
+            <End Role="TiffinTypeMaster" EntitySet="TiffinTypeMasters" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_UserMaster" Association="TiffinManagementServiceModel.FK_Order_UserMaster">
+            <End Role="UserMaster" EntitySet="UserMasters" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="TiffinTypeId" Type="Int32" Nullable="false" />
+          <Property Name="IsButterMilk" Type="Boolean" Nullable="false" />
+          <Property Name="TiffinPrice" Type="Int32" Nullable="false" />
+          <Property Name="ButterMilkPrice" Type="Int32" Nullable="false" />
+          <Property Name="ExtraItem" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ExtraItemPrice" Type="Int32" />
+          <Property Name="Total" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TiffinTypeMaster" Relationship="TiffinManagementServiceModel.FK_Order_TiffinTypeMaster" FromRole="Order" ToRole="TiffinTypeMaster" />
+          <NavigationProperty Name="UserMaster" Relationship="TiffinManagementServiceModel.FK_Order_UserMaster" FromRole="Order" ToRole="UserMaster" />
+        </EntityType>
+        <EntityType Name="TiffinTypeMaster">
+          <Key>
+            <PropertyRef Name="TiffinTypeId" />
+          </Key>
+          <Property Name="TiffinTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TiffinTypeName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TiffinPrice" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="TiffinManagementServiceModel.FK_Order_TiffinTypeMaster" FromRole="TiffinTypeMaster" ToRole="Order" />
+        </EntityType>
+        <Association Name="FK_Order_TiffinTypeMaster">
+          <End Type="TiffinManagementServiceModel.TiffinTypeMaster" Role="TiffinTypeMaster" Multiplicity="1" />
+          <End Type="TiffinManagementServiceModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TiffinTypeMaster">
+              <PropertyRef Name="TiffinTypeId" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="TiffinTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_UserMaster">
+          <End Type="TiffinManagementServiceModel.UserMaster" Role="UserMaster" Multiplicity="1" />
+          <End Type="TiffinManagementServiceModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserMaster">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TiffinManagementServiceModelStoreContainer" CdmEntityContainer="TiffinManagementServiceEntities">
+          <EntitySetMapping Name="UserMasters">
+            <EntityTypeMapping TypeName="TiffinManagementServiceModel.UserMaster">
+              <MappingFragment StoreEntitySet="UserMaster">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Contact" ColumnName="Contact" />
+                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+                <ScalarProperty Name="DefaultTiffinTypeId" ColumnName="DefaultTiffinTypeId" />
+                <ScalarProperty Name="IsRegularBM" ColumnName="IsRegularBM" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="TiffinManagementServiceModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="ExtraItemPrice" ColumnName="ExtraItemPrice" />
+                <ScalarProperty Name="ExtraItem" ColumnName="ExtraItem" />
+                <ScalarProperty Name="ButterMilkPrice" ColumnName="ButterMilkPrice" />
+                <ScalarProperty Name="TiffinPrice" ColumnName="TiffinPrice" />
+                <ScalarProperty Name="IsButterMilk" ColumnName="IsButterMilk" />
+                <ScalarProperty Name="TiffinTypeId" ColumnName="TiffinTypeId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TiffinTypeMasters">
+            <EntityTypeMapping TypeName="TiffinManagementServiceModel.TiffinTypeMaster">
+              <MappingFragment StoreEntitySet="TiffinTypeMaster">
+                <ScalarProperty Name="TiffinPrice" ColumnName="TiffinPrice" />
+                <ScalarProperty Name="TiffinTypeName" ColumnName="TiffinTypeName" />
+                <ScalarProperty Name="TiffinTypeId" ColumnName="TiffinTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
