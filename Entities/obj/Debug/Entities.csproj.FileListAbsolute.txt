@@ -1,5 +1,0 @@
-C:\Data\Demo\MVC\TiffinManagementService\Entities\bin\Debug\Entities.dll
-C:\Data\Demo\MVC\TiffinManagementService\Entities\bin\Debug\Entities.pdb
-C:\Data\Demo\MVC\TiffinManagementService\Entities\obj\Debug\Entities.csprojResolveAssemblyReference.cache
-C:\Data\Demo\MVC\TiffinManagementService\Entities\obj\Debug\Entities.dll
-C:\Data\Demo\MVC\TiffinManagementService\Entities\obj\Debug\Entities.pdb
