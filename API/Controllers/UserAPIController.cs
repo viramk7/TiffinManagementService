@@ -12,7 +12,6 @@ using TiffinManagementService.Common;
 
 namespace API.Controllers
 {
-
     [RoutePrefix("api")]
     public class UserAPIController : ApiController
     {
@@ -35,6 +34,13 @@ namespace API.Controllers
         public ApiResponse<UserModel> GetUsersFromEdmx(int? userId = null)
         {
             return _service.GetUsersFromEdmx(userId);
+        }
+
+        [HttpPost]
+        [Route("CreateNewUser")]
+        public BaseApiResponse CreateNewUser(UserModel model)
+        {
+            return _service.CreateNewUser(model);
         }
 
     }

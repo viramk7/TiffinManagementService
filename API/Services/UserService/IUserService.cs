@@ -13,5 +13,7 @@ namespace API.Services.UserService
         ApiResponse<UserModel> GetUsersFromRepository(int? userId);
 
         ApiResponse<UserModel> GetUsersFromEdmx(int? userId = null);
+
+        BaseApiResponse CreateNewUser(UserModel model);
     }
 }

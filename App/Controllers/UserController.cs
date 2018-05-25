@@ -1,4 +1,5 @@
-﻿using Entities;
+﻿using Common.WebClient;
+using Entities;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -14,14 +15,11 @@ namespace App.Controllers
 {
     public class UserController : Controller
     {
-        HttpClient _client;
+        WebClientHelper _client;
 
         public UserController()
         {
-            _client = new HttpClient();
-            _client.BaseAddress = new Uri(ConfigurationManager.AppSettings["APIPath"]);
-            _client.DefaultRequestHeaders.Accept.Clear();
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            _client = WebClientHelper.Instance;
         }
 
         public async Task<ActionResult> Index()
@@ -29,23 +27,28 @@ namespace App.Controllers
             var userList = new List<UserModel>();
 
             var url = "api/GetUsersFromRepository";
-            HttpResponseMessage response = await _client.GetAsync(url);
-            if (response.IsSuccessStatusCode)
+            var result = await _client.GetRequest(new ApiResponse<UserModel>(), url);
+            if (result.Success)
             {
-                var result = await response.Content.ReadAsAsync<ApiResponse<UserModel>>();
-                if (result.Success)
-                {
-                    userList = result.Data.ToList();
-                }
+                userList = result.Data.ToList();
             }
 
             return View(userList);
         }
 
         // GET: User/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            return View();
+            var userObj = new UserModel();
+
+            var url = "api/GetUsersFromRepository?userId=" + id;
+            var result = await _client.GetRequest(new ApiResponse<UserModel>(), url);
+            if (result.Success)
+            {
+                userObj = result.Data.FirstOrDefault();
+            }
+
+            return View(userObj);
         }
 
         // GET: User/Create
@@ -56,13 +59,23 @@ namespace App.Controllers
 
         // POST: User/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public async Task<ActionResult> Create(UserModel userModel)
         {
             try
             {
-                // TODO: Add insert logic here
+                var url = "api/CreateNewUser";
+                var result = new BaseApiResponse();
+                result = await _client.PostRequest<BaseApiResponse, UserModel>(userModel, url);
 
-                return RedirectToAction("Index");
+                if (result.Success)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return View();
+                }
+                
             }
             catch
             {

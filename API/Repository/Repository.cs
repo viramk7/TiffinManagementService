@@ -1,4 +1,5 @@
-﻿using System;
+﻿using API.Database;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Common;
@@ -6,16 +7,48 @@ using System.Data.Entity;
 
 namespace TiffinManagementService.API.Repository
 {
-    public class Repository : IRepository
+    public class Repository<T> : IRepository<T> where T : class
     {
-        private readonly DbContext _ctx;
+        private readonly TiffinManagementServiceEntities _ctx;
         private readonly string _cs;
+        
+        private IDbSet<T> entities;
 
         public Repository()
         {
             _cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            _ctx = new DbContext(_cs);
+            _ctx = new TiffinManagementServiceEntities();
         }
+
+
+
+        protected virtual IDbSet<T> Entities
+        {
+            get
+            {
+                if (entities == null)
+                {
+                    entities = _ctx.Set<T>();
+                }
+
+                return this.entities;
+            }
+        }
+
+        // Insert
+        public void Insert(T entity)
+        {
+            if (entity == null)
+            {
+                throw new ArgumentNullException("entity");
+            }
+
+            Entities.Add(entity);
+        }
+        
+        // Update
+
+        // Delete
 
         public IEnumerable<TElement> ExecuteSql<TElement>(string commandText, params object[] parameters)
         {

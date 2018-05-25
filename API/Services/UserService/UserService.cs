@@ -14,12 +14,12 @@ namespace API.Services.UserService
     {
         #region Initialiazations
 
-        IRepository _repository;
+        IRepository<UserModel> _repository;
         TiffinManagementServiceEntities _edmx;
 
         public UserService()
         {
-            _repository = new Repository();
+            _repository = new Repository<UserModel>();
             _edmx = new TiffinManagementServiceEntities();
         }
         
@@ -73,6 +73,38 @@ namespace API.Services.UserService
 
                 response.Data = result;
                 response.Success = true;
+            }
+            catch (Exception ex)
+            {
+                response.Message.Add(ex.Message);
+            }
+
+            return response;
+        }
+
+        public BaseApiResponse CreateNewUser(UserModel model)
+        {
+            var response = new BaseApiResponse();
+
+            try
+            {
+                var userMaster = new UserMaster
+                {
+                    UserName = model.UserName,
+                    DefaultTiffinTypeId = model.DefaultTiffinTypeId,
+                    Contact = model.Contact,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    IsActive = model.IsActive,
+                    IsAdmin = model.IsAdmin,
+                    IsRegularBM = model.IsRegularBM,
+                    LastName = model.LastName
+                };
+
+                _edmx.UserMasters.Add(userMaster);
+                _edmx.SaveChanges();
+
+                response.Success = userMaster.UserId > 0;
             }
             catch (Exception ex)
             {
